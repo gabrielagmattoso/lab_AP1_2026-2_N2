@@ -76,7 +76,27 @@ public class Assinante {
      * Lista vazia → INICIANTE.
      */
     public Engajamento classificacaoEngajamento() {
-        //TODO Tarefa 2
+        double tempoAssistido = tempoTotalAssistido();
+        double tempoTotalEpsodios = creditoDeTempo() + tempoAssistido;
+
+
+        if(episodios.isEmpty() || tempoAssistido <= tempoTotalEpsodios*0.10){
+            return Engajamento.INICIANTE;
+        }
+        else if(tempoAssistido > tempoTotalEpsodios*0.10 && tempoAssistido <= tempoTotalEpsodios*0.5){
+            return Engajamento.REGULAR;
+        }
+        else if(tempoAssistido > tempoTotalEpsodios*0.5 && tempoAssistido <= tempoTotalEpsodios*0.75){
+            return Engajamento.ENGAJADO;
+        } else if(tempoAssistido > tempoTotalEpsodios*0.75){
+            return Engajamento.BINGE;
+        }
+
+        
+
+
+
+
         return Engajamento.INICIANTE;
     }
 
@@ -85,7 +105,11 @@ public class Assinante {
      * caso contrário, TARIFA_BASE multiplicada pelo fator da classificação.
      */
     public double tarifaMensal() {
-        //TODO Tarefa 3
+        if(tempoTotalAssistido() <= MINUTOS_ISENCAO){
+            return TARIFA_BASE*classificacaoEngajamento().getFator();
+
+        }
+
         return 0.0;
     }
 

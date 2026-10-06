@@ -50,12 +50,37 @@ public class AssinanteTest {
 
     @Test
     void deveClassificarEngajamento() {
-        //TODO Tarefa 4: testar classificacaoEngajamento em pelo menos dois cenários
-        // (ex.: 4 episódios com 2 assistidos → REGULAR; 4 com 4 assistidos → BINGE)
+        assinante.adicionar(new Episodio("A", 1, 40));
+        assinante.adicionar(new Episodio("B", 1, 50));
+
+        assinante.registrarAssistido("A");
+
+        assertEquals(Engajamento.REGULAR, assinante.classificacaoEngajamento());
+
+        assinante.registrarAssistido("B");
+
+        assertEquals(Engajamento.BINGE, assinante.classificacaoEngajamento());
     }
 
     @Test
     void deveCalcularTarifaMensal() {
+        assinante.adicionar(new Episodio("A", 1, 250)); 
+        assinante.adicionar(new Episodio("B", 1, 50));
+
+        assinante.registrarAssistido("A");
+
+        assertEquals(assinante.TARIFA_BASE * Engajamento.BINGE.getFator() , assinante.tarifaMensal());
+
+        assinante.adicionar(new Episodio("C", 1, 301)); 
+        assinante.adicionar(new Episodio("D", 1, 50));
+
+        assinante.registrarAssistido("B");
+        assinante.registrarAssistido("C");
+
+        assertEquals(0, assinante.tarifaMensal());
+
+
+
         //TODO Tarefa 5: testar tarifaMensal usando o fator da classificação
         // (ex.: BINGE sem isenção → 29,90 × 1,10) e a isenção acima de 600 minutos
     }
